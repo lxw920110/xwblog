@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link  type="text/css" rel="stylesheet" href="/static/css/theme/{{ blog.theme }}">
+    <link rel="stylesheet" href="/static/bootstrap/css/bootstrap.css">
+    <script src="/static/bootstrap/js/jquery.js"></script>
+    <script src="/static/bootstrap/js/bootstrap.js"></script>
+    <link rel="stylesheet" href="/static/css/article_detail.css">
+    <link rel="icon" href="//www.jd.com/favicon.ico" mce_href="//www.jd.com/favicon.ico" type="image/x-icon">
+    <style>
+        .title{
+            font-family: "Microsoft Sans Serif";
+            font-weight: bolder;
+            font-style: unset;
+
+        }
+
+    </style>
+</head>
+<body>
+<div class="header">
+    <p class="title">{{ blog.title }}</p>
+    <a href="/" class="pull-right">博客园首页</a>
+</div>
+
+<div class="container-fluid" style="background-color: beige">
+    <div class="row">
+        <div class="col-md-3">
+            {% load my_tags %}
+            {% get_query_data username %}
+        </div>
+
+        <div class="col-md-9">
+            {% block content %}
+            {% endblock %}
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

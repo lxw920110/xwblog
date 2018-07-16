@@ -1,0 +1,60 @@
+{% extends 'backend/base.html' %}
+<style>
+    .li{
+        text-decoration: none;
+    }
+</style>
+{% block content %}
+
+    <form action="{% url 'edit_article' article_obj.nid %}" method="post">
+    {% csrf_token %}
+    <div class="edit_article">
+
+        <div class="edit_article_region">
+            <div class="title form-group">
+                <label for="title" id="title"  >标题</label>
+                <div>
+                    <input type="text" name="title" placeholder="title" value="{{ article_obj.title }}">
+                </div>
+            </div>
+
+            <div class="content form-group">
+                <label for="content" id="content" value="{{ article_obj.content }}">内容(kindeditor编辑器,不支持拖放/粘贴上传图片</label>
+                <div>
+                    <textarea name="content" id="article_content" cols="30" rows="10" placeholder="content">{{ article_obj.content }}</textarea>
+                </div>
+            </div>
+            <div>
+                <ul>
+                    {% for cate in cate_list %}
+                        {% if  %}
+                        <li>{{ cate.title }} <input type="radio" name="cate" value="{{ cate.pk }}"></li>
+                    {% endfor %}
+                </ul>
+                <hr>
+            <ul>
+                {% for tag in tags %}
+                    <li>{{ tag.title }} <input type="checkbox" name="tags" value="{{ tag.pk }}"></li>
+                {% endfor %}
+            </ul>
+            </div>
+            <input type="submit" class="btn btn-default">
+        </div>
+    </div>
+    </form>
+    <script charset="utf-8" src="/static/kindeditor/kindeditor-all.js"></script>
+    <script>
+        KindEditor.ready(function (K) {
+            window.editor = K.create("#article_content",{
+                width:600,
+                height:600,
+                resizeType:0,
+                uploadJson:"/upload",
+                extraFileUploadParams:{
+                    csrfmiddlewaretoken:$("[name='csrfmiddlewaretoken']").val()
+                },
+                filePostName:"upload_img"
+            });
+        });
+    </script>
+{% endblock %}
